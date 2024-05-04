@@ -27,6 +27,6 @@ public class RoomController {
 
     @GetMapping("/summary")
     public ResponseEntity<?> getRoomSummary(String room_id){
-        return ResponseEntity.ok().body("토론 방 상세 간단히 보기");
+        return ResponseEntity.ok().body("토론 방 정보 간단히 보기");
     }
 }

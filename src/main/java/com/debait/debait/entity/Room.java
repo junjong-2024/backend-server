@@ -21,8 +21,9 @@ public class Room {
     @Column(name = "created_at")
     private LocalDateTime created_at;
 
-    @Column(name = "user_id")
-    private String user_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(name = "video_src")
     private String video_src;
@@ -33,27 +34,20 @@ public class Room {
     @Column(name = "script")
     private String script;
 
-    @Column(name = "rule_id")
-    private String rule_id;
-
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "id")
-//    private User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "rule_id", referencedColumnName = "id")
-//    private Rule rule;
+    @ManyToOne
+    @JoinColumn(name = "rule_id", referencedColumnName = "id")
+    private Rule rule;
 
     @Builder
-    public Room(String id, String name, LocalDateTime created_at, String user_id, String video_src, String thumbnail_src, String script, String rule_id){
+    public Room(String id, String name, LocalDateTime created_at, User user, String video_src, String thumbnail_src, String script, Rule rule) {
         this.id = id;
         this.name = name;
         this.created_at = created_at;
-        this.user_id = user_id;
+        this.user = user;
         this.video_src = video_src;
         this.thumbnail_src = thumbnail_src;
         this.script = script;
-        this.rule_id = rule_id;
+        this.rule = rule;
     }
 
 }

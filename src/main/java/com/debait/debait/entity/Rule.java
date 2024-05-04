@@ -21,22 +21,16 @@ public class Rule {
     @Column(name = "spec")
     private String spec;
 
-    @Column(name = "user_id")
-    private String user_id;
-
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "id")
-//    private User user;
-//
-//    @OneToMany(mappedBy = "rule", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Room> rooms = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Builder
-    public Rule(String id, String rule_name, String spec, String user_id)
+    public Rule(String id, String rule_name, String spec, User user)
     {
         this.id = id;
         this.rule_name = rule_name;
         this.spec = spec;
-        this.user_id = user_id;
+        this.user = user;
     }
 }

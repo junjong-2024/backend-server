@@ -39,9 +39,6 @@ public class User {
     @Column(name = "max_storage")
     private int max_storage;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Room> rooms = new ArrayList<>();
-
     @Builder
     public User(String id, String name, String login_id, String password, String user_email, LocalDateTime payment_at, LocalDateTime payment_expires_at, int usage_storage, int max_stroage){
         this.id = id;

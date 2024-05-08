@@ -1,10 +1,10 @@
-package com.debait.debait.entity;
+package com.debait.debait.room.entity;
 
+import com.debait.debait.rule.entity.Rule;
+import com.debait.debait.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "discussion_room")

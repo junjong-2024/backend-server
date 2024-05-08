@@ -1,10 +1,8 @@
-package com.debait.debait.entity;
+package com.debait.debait.rule.entity;
 
+import com.debait.debait.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "rule")

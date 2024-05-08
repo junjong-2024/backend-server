@@ -1,4 +1,4 @@
-package com.debait.debait.controller;
+package com.debait.debait.room.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -4,15 +4,22 @@ import com.debait.debait.rule.entity.Rule;
 import com.debait.debait.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "discussion_room")
 @Getter
+@Setter
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Room {
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     @Column(name = "name")
@@ -34,9 +41,14 @@ public class Room {
     @Column(name = "script")
     private String script;
 
-    @ManyToOne
-    @JoinColumn(name = "rule_id", referencedColumnName = "id")
-    private Rule rule;
+//    @ManyToOne
+//    @JoinColumn(name = "rule_id", referencedColumnName = "id")
+//    private Rule rule;
+
+    @PrePersist
+    protected void onCreated() {
+        created_at = LocalDateTime.now();
+    }
 
     @Builder
     public Room(String id, String name, LocalDateTime created_at, User user, String video_src, String thumbnail_src, String script, Rule rule) {
@@ -47,7 +59,7 @@ public class Room {
         this.video_src = video_src;
         this.thumbnail_src = thumbnail_src;
         this.script = script;
-        this.rule = rule;
+        // this.rule = rule;
     }
 
 }

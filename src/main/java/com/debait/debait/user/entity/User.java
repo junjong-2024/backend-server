@@ -3,9 +3,11 @@ package com.debait.debait.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -58,4 +60,7 @@ public class User {
         this.usage_storage = usage_storage;
         this.max_storage = max_stroage;
     }
+
+
+
 }

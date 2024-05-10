@@ -1,5 +1,6 @@
 package com.debait.debait.user.controller;
 
+import com.debait.debait.user.dto.request.UserLoginRequestDTO;
 import com.debait.debait.user.dto.request.UserRegisterRequestDTO;
 import com.debait.debait.user.dto.request.UserUpdateRequestDTO;
 import com.debait.debait.user.dto.response.UserRegisterResponseDTO;
@@ -38,6 +39,11 @@ public class UserController {
         UserRegisterResponseDTO register = userService.register(dto);
         return ResponseEntity.ok().body(register);
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO dto) {
+//        System.out.println();
+//    }
 
     @PutMapping("/update/{user_id}")
     public ResponseEntity<?> update(@PathVariable("user_id") String user_id, @RequestBody UserUpdateRequestDTO dto) {

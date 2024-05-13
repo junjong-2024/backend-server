@@ -40,10 +40,11 @@ public class UserController {
         return ResponseEntity.ok().body(register);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO dto) {
-//        System.out.println();
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO dto) {
+        System.out.println(dto);
+        return ResponseEntity.ok().body(new UserLoginRequestDTO());
+    }
 
     @PutMapping("/update/{user_id}")
     public ResponseEntity<?> update(@PathVariable("user_id") String user_id, @RequestBody UserUpdateRequestDTO dto) {

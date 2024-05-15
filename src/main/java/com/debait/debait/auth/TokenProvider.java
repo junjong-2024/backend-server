@@ -78,6 +78,7 @@ public class TokenProvider implements InitializingBean {
 //
 //        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 //    }
+
     public Authentication getAuthentication(String username) {
         // 여기서 username은 사용자의 식별자로, 사용자의 정보를 검색하여 Authentication 객체를 생성
         // 만약 UserDetails 객체를 사용하고 있다면 UserDetails를 검색하여 Authentication 객체를 생성

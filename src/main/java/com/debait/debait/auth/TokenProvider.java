@@ -31,7 +31,15 @@ public class TokenProvider implements InitializingBean {
 
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds)
+            //Value("${jwt.secret}") String secret,
+            //@Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds)
+    {
+
+//        if (secret.length() < 64) {
+//            throw new IllegalArgumentException("JWT secret key size is not secure enough for HS512 algorithm.");
+//            //System.out.println("JWT secret key size is not secure enough for HS512 algorithm.");
+//        }
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
@@ -40,13 +48,18 @@ public class TokenProvider implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
+
         this.key = Keys.hmacShaKeyFor(keyBytes);
+
     }
 
     public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+
+
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
         // 토큰의 expire 시간을 설정
         long now = (new Date()).getTime();

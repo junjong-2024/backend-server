@@ -3,8 +3,13 @@ package com.debait.debait.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -12,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class User {
+public class User  {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "system-uuid")
@@ -56,6 +61,10 @@ public class User {
         this.max_storage = max_stroage;
     }
 
-
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // 사용자의 권한을 반환하는 메서드입니다.
+        // 여기서는 빈 권한 목록을 반환합니다.
+        return Collections.emptyList();
+    }
 
 }

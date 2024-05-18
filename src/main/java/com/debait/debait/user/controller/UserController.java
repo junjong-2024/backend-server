@@ -4,6 +4,7 @@ package com.debait.debait.user.controller;
 import com.debait.debait.user.dto.request.UserLoginRequestDTO;
 import com.debait.debait.user.dto.request.UserRegisterRequestDTO;
 import com.debait.debait.user.dto.request.UserUpdateRequestDTO;
+import com.debait.debait.user.dto.response.UserLoginResponseDTO;
 import com.debait.debait.user.dto.response.UserRegisterResponseDTO;
 import com.debait.debait.user.dto.response.UserUpdateResponseDTO;
 import com.debait.debait.user.service.UserService;
@@ -43,8 +44,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO dto) {
-        System.out.println(dto);
-        return ResponseEntity.ok().body(new UserLoginRequestDTO());
+        UserLoginResponseDTO responseDTO = userService.login(dto);
+       // System.out.println(dto);
+       // return ResponseEntity.ok().body(new UserLoginRequestDTO()); // 결과를 ResponseEntity에 담아서 반환
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @PutMapping("/update/{user_id}")
@@ -88,8 +91,6 @@ public class UserController {
             log.warn(e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
-
     }
 
 }

@@ -9,6 +9,7 @@ import com.debait.debait.user.dto.response.UserRegisterResponseDTO;
 import com.debait.debait.user.dto.response.UserUpdateResponseDTO;
 import com.debait.debait.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -38,8 +39,12 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserRegisterRequestDTO dto) {
-        UserRegisterResponseDTO register = userService.register(dto);
-        return ResponseEntity.ok().body(register);
+        try {
+            UserRegisterResponseDTO register = userService.register(dto);
+            return ResponseEntity.ok().body(register);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")

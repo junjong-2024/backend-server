@@ -47,6 +47,11 @@ public class UserService {
 
 
     public UserRegisterResponseDTO register(UserRegisterRequestDTO dto) {
+        // 아이디 중복 확인 로직 추가
+        if (userRepository.existsByLoginId(dto.getLogin_id())) {
+            throw new RuntimeException("아이디가 이미 존재합니다.");
+        }
+
         User save = userRepository.save(dto.toEntity());
         return new UserRegisterResponseDTO(save);
     }

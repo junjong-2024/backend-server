@@ -32,14 +32,7 @@ public class TokenProvider implements InitializingBean {
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds)
-            //Value("${jwt.secret}") String secret,
-            //@Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds)
     {
-
-//        if (secret.length() < 64) {
-//            throw new IllegalArgumentException("JWT secret key size is not secure enough for HS512 algorithm.");
-//            //System.out.println("JWT secret key size is not secure enough for HS512 algorithm.");
-//        }
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
@@ -48,9 +41,7 @@ public class TokenProvider implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
-
         this.key = Keys.hmacShaKeyFor(keyBytes);
-
     }
 
     public String createToken(Authentication authentication) {
@@ -91,6 +82,7 @@ public class TokenProvider implements InitializingBean {
 //
 //        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 //    }
+
     public Authentication getAuthentication(String username) {
         // 여기서 username은 사용자의 식별자로, 사용자의 정보를 검색하여 Authentication 객체를 생성
         // 만약 UserDetails 객체를 사용하고 있다면 UserDetails를 검색하여 Authentication 객체를 생성

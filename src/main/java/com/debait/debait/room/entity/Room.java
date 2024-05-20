@@ -41,9 +41,9 @@ public class Room {
     @Column(name = "script")
     private String script;
 
-//    @ManyToOne
-//    @JoinColumn(name = "rule_id", referencedColumnName = "id")
-//    private Rule rule;
+    @ManyToOne
+    @JoinColumn(name = "rule_id", referencedColumnName = "id", nullable = false)
+    private Rule rule;
 
     @PrePersist
     protected void onCreated() {
@@ -59,7 +59,7 @@ public class Room {
         this.video_src = video_src;
         this.thumbnail_src = thumbnail_src;
         this.script = script;
-        // this.rule = rule;
+         this.rule = rule;
     }
 
 }

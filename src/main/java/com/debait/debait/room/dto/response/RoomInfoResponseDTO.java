@@ -28,6 +28,6 @@ public class RoomInfoResponseDTO {
         this.video_src = room.getVideo_src();
         this.thumbnail_src = room.getThumbnail_src();
         this.script = room.getScript();
-        // this.rule_id = room.getRule().getId();
+        this.rule_id = room.getRule().getId();
     }
 }

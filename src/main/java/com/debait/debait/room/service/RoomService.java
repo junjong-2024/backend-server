@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final RuleRepository ruleRepository;
+
     public RoomInfoResponseDTO create(RoomInfoRequestDTO dto, TokenUserInfo userInfo) {
 
         User user = userRepository.findById(userInfo.getUserId()).orElseThrow(() ->
@@ -30,13 +32,17 @@ public class RoomService {
         );
 
         Rule aaabbb = ruleRepository.findById("aaabbb").orElseThrow(() -> new RuntimeException("조건에 맞는 규칙이 없습니다."));
-
+        // 임의로 Rule 지정
 
         Room save = roomRepository.save(dto.toEntity(user, aaabbb));
         return new RoomInfoResponseDTO(save);
     }
 
-//    public List<RoomInfoResponseDTO> getRoomInfoList(String user_id) {
+    //    public List<RoomInfoResponseDTO> getRoomInfoList(String user_id) {
 //
 //    }
+    public List<RoomInfoResponseDTO> getRoomInfoList(String userId) {
+        List<Room> rooms = roomRepository.findByUser_Id(userId);
+        return rooms.stream().map(RoomInfoResponseDTO::new).collect(Collectors.toList());
+    }
 }

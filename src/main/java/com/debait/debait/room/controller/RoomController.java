@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/room")
 @Slf4j
@@ -40,16 +42,28 @@ public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo,
     return ResponseEntity.ok().body(create);
 }
 
+    // 특정 사용자가 생성한 토론 목록을 가져오기
     @GetMapping("/list")
-    public ResponseEntity<?> getRoom(String user_id){
-        return ResponseEntity.ok().body("토론 목록 가져오기");
+    public ResponseEntity<?> getRoom(@AuthenticationPrincipal TokenUserInfo userInfo) {
+        if (userInfo == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+
+        List<RoomInfoResponseDTO> rooms = roomService.getRoomInfoList(userInfo.getUserId());
+        return ResponseEntity.ok().body(rooms);
     }
 
+
+    // return ResponseEntity.ok().body("토론 목록 가져오기");
+
+
+    // 특정 방의 상세 정보를 가져오기
     @GetMapping("/info")
     public ResponseEntity<?> getRoomInfo(String room_id){
         return ResponseEntity.ok().body("토론 방 상세 정보");
     }
 
+    // 특정 방의 정보를 간단히 보기
     @GetMapping("/summary")
     public ResponseEntity<?> getRoomSummary(String room_id){
         return ResponseEntity.ok().body("토론 방 정보 간단히 보기");

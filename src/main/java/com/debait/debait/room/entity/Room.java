@@ -59,7 +59,7 @@ public class Room {
         this.video_src = video_src;
         this.thumbnail_src = thumbnail_src;
         this.script = script;
-         this.rule = rule;
+        this.rule = rule;
     }
 
 }

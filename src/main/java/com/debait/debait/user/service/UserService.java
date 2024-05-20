@@ -62,7 +62,7 @@ public class UserService {
 
         if (dto.getName() != null) {
             user.setName(dto.getName());
-            log.warn("name : ", dto.getName());
+//            log.warn("name : ", dto.getName());
         }
         if (dto.getUser_email() != null) {
             user.setUser_email(dto.getUser_email());
@@ -72,7 +72,7 @@ public class UserService {
         }
 
         User savedUser = userRepository.save(user);
-        log.warn("savedUser : {}", savedUser);
+//        log.warn("savedUser : {}", savedUser);
 
         return new UserUpdateResponseDTO(savedUser);
     }
@@ -115,7 +115,7 @@ public class UserService {
 
 
         // 토큰 생성
-        String token = tokenProvider.createToken(authentication);
+        String token = tokenProvider.createToken(user);
 
         // 로그인 응답 DTO 생성
         UserLoginResponseDTO responseDTO = new UserLoginResponseDTO();

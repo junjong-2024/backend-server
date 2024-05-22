@@ -11,9 +11,11 @@ import com.debait.debait.user.entity.User;
 import com.debait.debait.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final RuleRepository ruleRepository;
+    private final ModelMapper modelMapper;
 
     public RoomInfoResponseDTO create(RoomInfoRequestDTO dto, TokenUserInfo userInfo) {
 
@@ -38,11 +41,14 @@ public class RoomService {
         return new RoomInfoResponseDTO(save);
     }
 
-    //    public List<RoomInfoResponseDTO> getRoomInfoList(String user_id) {
-//
-//    }
     public List<RoomInfoResponseDTO> getRoomInfoList(String userId) {
         List<Room> rooms = roomRepository.findByUser_Id(userId);
         return rooms.stream().map(RoomInfoResponseDTO::new).collect(Collectors.toList());
+    }
+
+    public RoomInfoResponseDTO getRoom(String room_id) {
+        Optional<Room> optionalRoom = roomRepository.findById(room_id);
+        Room room = optionalRoom.orElseThrow(()-> new RuntimeException("Room not found"));
+        return modelMapper.map(room, RoomInfoResponseDTO.class);
     }
 }

@@ -53,14 +53,12 @@ public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo,
         return ResponseEntity.ok().body(rooms);
     }
 
-
-    // return ResponseEntity.ok().body("토론 목록 가져오기");
-
-
     // 특정 방의 상세 정보를 가져오기
-    @GetMapping("/info")
-    public ResponseEntity<?> getRoomInfo(String room_id){
-        return ResponseEntity.ok().body("토론 방 상세 정보");
+    @GetMapping("/{room_id}")
+    public ResponseEntity<?> getRoomInfo(@PathVariable("room_id") String room_id){
+    RoomInfoResponseDTO roomInfoResponseDTO = roomService.getRoom(room_id);
+    return ResponseEntity.ok().body(roomInfoResponseDTO);
+        // return ResponseEntity.ok().body("토론 방 상세 정보");
     }
 
     // 특정 방의 정보를 간단히 보기

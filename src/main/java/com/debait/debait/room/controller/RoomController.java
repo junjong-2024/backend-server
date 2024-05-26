@@ -28,8 +28,9 @@ public class RoomController {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
-@PostMapping()
-public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo, @RequestBody RoomInfoRequestDTO dto, HttpServletRequest request) {
+
+    @PostMapping()
+    public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo, @RequestBody RoomInfoRequestDTO dto, HttpServletRequest request) {
 
     if (userInfo == null) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
@@ -40,7 +41,7 @@ public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo,
 
     RoomInfoResponseDTO create = roomService.create(dto, userInfo);
     return ResponseEntity.ok().body(create);
-}
+    }
 
     // 특정 사용자가 생성한 토론 목록을 가져오기
     @GetMapping("/list")

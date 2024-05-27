@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class RuleInfoResponseDTO {
     private String id;
-    private String ruleName;
+    private String rule_name;
     private String spec;
     private String user_id;
 
     public RuleInfoResponseDTO(Rule rule) {
         this.id = rule.getId();
-        this.ruleName = rule.getRuleName();
+        this.rule_name = rule.getRuleName();
         this.spec = rule.getSpec();
         this.user_id = rule.getUser().getId();
     }

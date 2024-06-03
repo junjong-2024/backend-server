@@ -5,6 +5,7 @@ import com.debait.debait.room.dto.request.RoomInfoRequestDTO;
 import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.repository.RoomRepository;
+import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
 import com.debait.debait.rule.entity.Rule;
 import com.debait.debait.rule.repository.RuleRepository;
 import com.debait.debait.user.entity.User;
@@ -49,6 +50,10 @@ public class RoomService {
     public RoomInfoResponseDTO getRoom(String room_id) {
         Optional<Room> optionalRoom = roomRepository.findById(room_id);
         Room room = optionalRoom.orElseThrow(()-> new RuntimeException("Room not found"));
-        return modelMapper.map(room, RoomInfoResponseDTO.class);
+        //return modelMapper.map(room, RoomInfoResponseDTO.class);
+        return RoomInfoResponseDTO.fromRoom(room);
     }
 }
+
+
+

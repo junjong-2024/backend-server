@@ -61,5 +61,4 @@ public class Room {
         this.script = script;
         this.rule = rule;
     }
-
 }

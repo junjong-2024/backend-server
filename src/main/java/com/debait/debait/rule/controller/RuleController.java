@@ -61,4 +61,11 @@ public class RuleController {
         List<RuleInfoResponseDTO> rules = ruleService.getRuleInfoList(userInfo.getUserId());
         return ResponseEntity.ok().body(rules);
     }
+
+    //특정 규칙 목록 가져오기
+    @GetMapping("/{rule_id}")
+    public ResponseEntity<?> getRuleInfo(@PathVariable("rule_id") String rule_id) {
+        RuleInfoResponseDTO ruleInfoResponseDTO = ruleService.getRule(rule_id);
+        return ResponseEntity.ok().body(ruleInfoResponseDTO);
+    }
 }

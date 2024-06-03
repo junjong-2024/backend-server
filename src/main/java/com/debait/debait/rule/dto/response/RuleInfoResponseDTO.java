@@ -22,4 +22,9 @@ public class RuleInfoResponseDTO {
         this.spec = rule.getSpec();
         this.user_id = rule.getUser().getId();
     }
+
+    // Rule 객체를 이용하여 RuleInfoResponseDTO 객체 생성
+    public static RuleInfoResponseDTO fromRule(Rule rule) {
+        return new RuleInfoResponseDTO(rule.getId(), rule.getRuleName(), rule.getSpec(), rule.getUser().getId());
+    }
 }

@@ -1,6 +1,8 @@
 package com.debait.debait.rule.service;
 
 import com.debait.debait.auth.TokenUserInfo;
+import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
+import com.debait.debait.room.entity.Room;
 import com.debait.debait.rule.dto.request.RuleInfoRequestDTO;
 import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
 import com.debait.debait.rule.entity.Rule;
@@ -13,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,4 +46,12 @@ public class RuleService {
         }
         return rules.stream().map(RuleInfoResponseDTO::new).collect(Collectors.toList());
     }
+
+    // 규칙 상세 보기
+    public RuleInfoResponseDTO getRule(String rule_id) {
+        Optional<Rule> optionalRule = ruleRepository.findById(rule_id);
+        Rule rule = optionalRule.orElseThrow(() -> new RuntimeException("Rule not found"));
+        return RuleInfoResponseDTO.fromRule(rule);
+    }
+
 }

@@ -1,9 +1,15 @@
 package com.debait.debait.rule.dto.response;
 
 import com.debait.debait.rule.entity.Rule;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RuleInfoResponseDTO {
     private String id;
     private String rule_name;

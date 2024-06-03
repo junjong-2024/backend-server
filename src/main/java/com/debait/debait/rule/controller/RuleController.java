@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -51,15 +52,13 @@ public class RuleController {
     }
 
     // 규칙 목록 가져오기
-    @GetMapping()
-    public ResponseEntity<?> getRule(String user_id) {
-        return ResponseEntity.ok().body("규칙 목록 가져오기");
-    }
+    @GetMapping("list")
+    public ResponseEntity<?> getRule(@AuthenticationPrincipal TokenUserInfo userInfo) {
+        if (userInfo == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
 
-    // 규칙 상세 정보보기
-    @GetMapping("/info")
-    public ResponseEntity<?> getRuleInfo(String rule_id) {
-        return ResponseEntity.ok().body("규칙 상세 보기");
+        List<RuleInfoResponseDTO> rules = ruleService.getRuleInfoList(userInfo.getUserId());
+        return ResponseEntity.ok().body(rules);
     }
-
 }

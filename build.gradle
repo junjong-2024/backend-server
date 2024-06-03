@@ -47,6 +47,10 @@ dependencies {
 
 }
 
+bootJar{
+	archiveFileName = "debait.jar"
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

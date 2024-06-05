@@ -6,6 +6,7 @@ import com.debait.debait.user.entity.User;
 import com.debait.debait.user.repository.UserRepository;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,13 +17,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class RoomInfoRequestDTO {
-    private String user_id;
+    @NotNull
     private String name;
+    @NotNull
+    private String rule_id;
+    private String user_id;
     private LocalDateTime created_at;
     private String videoSrc;
     private String thumbnailSrc;
     private String script;
-    private String rule_id;
+
 
     private final UserRepository userRepository;
 

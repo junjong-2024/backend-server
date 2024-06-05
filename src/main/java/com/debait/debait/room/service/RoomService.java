@@ -53,6 +53,11 @@ public class RoomService {
         //return modelMapper.map(room, RoomInfoResponseDTO.class);
         return RoomInfoResponseDTO.fromRoom(room);
     }
+
+    public void deleteRoom(String roomId) {
+        roomRepository.deleteById(roomId);
+    }
+
 }
 
 

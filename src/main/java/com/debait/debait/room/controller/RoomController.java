@@ -36,6 +36,9 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
     }
 
+    if (dto.getName() == null || dto.getRule_id() == null){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("rule_name and rule_id must be provided");
+    }
     // Room 생성 시 사용자 아이디를 포함하여 DTO 객체 생성
     dto.setUser_id(userInfo.getUserId());
 
@@ -67,4 +70,11 @@ public class RoomController {
     public ResponseEntity<?> getRoomSummary(String room_id){
         return ResponseEntity.ok().body("토론 방 정보 간단히 보기");
     }
+
+    @DeleteMapping("/del/{room_id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable("room_id") String room_id) {
+        roomService.deleteRoom(room_id);
+        return ResponseEntity.ok().body("Room deleted successfully");
+    }
+
 }

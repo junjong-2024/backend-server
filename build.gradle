@@ -45,6 +45,9 @@ dependencies {
 	// maria DB
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+	compileOnly 'javax:javaee-api:8.0'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 }
 
 bootJar{

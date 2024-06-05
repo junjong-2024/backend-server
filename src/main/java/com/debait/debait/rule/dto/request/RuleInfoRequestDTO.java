@@ -6,6 +6,8 @@ import com.debait.debait.user.entity.User;
 import com.debait.debait.user.repository.UserRepository;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Builder
@@ -13,8 +15,10 @@ import lombok.*;
 @EqualsAndHashCode
 
 public class RuleInfoRequestDTO {
+   @NotNull
     private String rule_name;
     private String user_id;
+    @NotNull
     private String spec;
 
     private UserRepository userRepository;

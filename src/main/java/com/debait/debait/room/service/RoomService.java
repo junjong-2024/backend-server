@@ -35,10 +35,10 @@ public class RoomService {
                 new RuntimeException("일치하는 회원을 찾을 수 없습니다.")
         );
 
-        Rule aaabbb = ruleRepository.findById("aaabbb").orElseThrow(() -> new RuntimeException("조건에 맞는 규칙이 없습니다."));
-        // 임의로 Rule 지정
+        Rule rule = ruleRepository.findById(dto.getRule_id())
+                .orElseThrow(() -> new RuntimeException("지정된 규칙을 찾을 수 없습니다."));
 
-        Room save = roomRepository.save(dto.toEntity(user, aaabbb));
+        Room save = roomRepository.save(dto.toEntity(user, rule));
         return new RoomInfoResponseDTO(save);
     }
 

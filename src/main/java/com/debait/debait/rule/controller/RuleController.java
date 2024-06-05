@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,10 +38,15 @@ public class RuleController {
 
     // 규칙 생성하기
     @PostMapping()
-    public ResponseEntity<?> create(@AuthenticationPrincipal TokenUserInfo userInfo, @RequestBody RuleInfoRequestDTO dto, HttpServletRequest request) {
+    public ResponseEntity<?> create(@Valid @AuthenticationPrincipal TokenUserInfo userInfo, @RequestBody RuleInfoRequestDTO dto, HttpServletRequest request) {
 
         if (userInfo == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+
+        if (dto.getRule_name() == null || dto.getSpec() == null) {
+            // 클라이언트가 필수 입력 필드를 제공하지 않은 경우
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("rule_name and spec must be provided");
         }
 
         // Rule 생성 시 사용자 아이디를 포함하여 DTO 객체 생성

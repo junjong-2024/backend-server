@@ -22,6 +22,7 @@ public class RoomInfoRequestDTO {
     private String videoSrc;
     private String thumbnailSrc;
     private String script;
+    private String rule_id;
 
     private final UserRepository userRepository;
 

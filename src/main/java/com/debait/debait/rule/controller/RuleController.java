@@ -68,4 +68,9 @@ public class RuleController {
         RuleInfoResponseDTO ruleInfoResponseDTO = ruleService.getRule(rule_id);
         return ResponseEntity.ok().body(ruleInfoResponseDTO);
     }
+
+    @DeleteMapping ("/del/{rule_id}")
+    public void deleteRule(@PathVariable("rule_id") String rule_id) {
+        ruleService.deleteRule(rule_id);
+    }
 }

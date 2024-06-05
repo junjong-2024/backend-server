@@ -1,8 +1,6 @@
 package com.debait.debait.rule.service;
 
 import com.debait.debait.auth.TokenUserInfo;
-import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
-import com.debait.debait.room.entity.Room;
 import com.debait.debait.rule.dto.request.RuleInfoRequestDTO;
 import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
 import com.debait.debait.rule.entity.Rule;
@@ -53,6 +51,18 @@ public class RuleService {
         Rule rule = optionalRule.orElseThrow(() -> new RuntimeException("Rule not found"));
         return RuleInfoResponseDTO.fromRule(rule);
     }
+
+    // 규칙 삭제하기
+    public void deleteRule(String rule_id) {
+        Optional<Rule> optionalRule = ruleRepository.findById(rule_id);
+        if (optionalRule.isPresent()) {
+            ruleRepository.delete(optionalRule.get());
+            log.info("Rule with ID {} deleted successfully", rule_id);
+        } else {
+            throw new RuntimeException("Rule not found");
+        }
+    }
+    
 
 }
 

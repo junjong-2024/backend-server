@@ -1,8 +1,11 @@
 package com.debait.debait.room.controller;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.debait.debait.auth.TokenUserInfo;
 import com.debait.debait.room.dto.request.RoomInfoRequestDTO;
+import com.debait.debait.room.dto.request.RoomUpdateRequestDTO;
 import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
+import com.debait.debait.room.dto.response.RoomUpdateResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,6 +67,22 @@ public class RoomController {
     RoomInfoResponseDTO roomInfoResponseDTO = roomService.getRoom(room_id);
     return ResponseEntity.ok().body(roomInfoResponseDTO);
         // return ResponseEntity.ok().body("토론 방 상세 정보");
+    }
+
+    @PutMapping("/update/{room_id}")
+    public ResponseEntity<?> update(@PathVariable("room_id") String room_id, @RequestBody RoomUpdateRequestDTO dto) {
+        try {
+            log.warn("request : {}", dto);
+            RoomUpdateResponseDTO responseDTO = roomService.updateRoom(room_id, dto);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (RuntimeException e){
+            log.warn("Error : {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e){
+            log.warn(e.getMessage());
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
     }
 
     // 특정 방의 정보를 간단히 보기

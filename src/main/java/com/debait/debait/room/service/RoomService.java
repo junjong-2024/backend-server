@@ -2,7 +2,9 @@ package com.debait.debait.room.service;
 
 import com.debait.debait.auth.TokenUserInfo;
 import com.debait.debait.room.dto.request.RoomInfoRequestDTO;
+import com.debait.debait.room.dto.request.RoomUpdateRequestDTO;
 import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
+import com.debait.debait.room.dto.response.RoomUpdateResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.repository.RoomRepository;
 import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +59,27 @@ public class RoomService {
 
     public void deleteRoom(String roomId) {
         roomRepository.deleteById(roomId);
+    }
+
+    @Transactional
+    public RoomUpdateResponseDTO updateRoom(String room_id, RoomUpdateRequestDTO dto) {
+        Room room = roomRepository.findById(room_id).orElseThrow(()-> new RuntimeException("일치하는 토론방이 없습니다."));
+
+        if (dto.getScript() != null){
+            room.setScript(dto.getScript());
+        }
+
+        if (dto.getVideo_src() != null) {
+            room.setVideo_src(dto.getVideo_src());
+        }
+
+        if (dto.getThumbnail_src() != null) {
+            room.setThumbnail_src(dto.getThumbnail_src());
+        }
+
+        Room savedRoom = roomRepository.save(room);
+
+        return new RoomUpdateResponseDTO(savedRoom);
     }
 
 }

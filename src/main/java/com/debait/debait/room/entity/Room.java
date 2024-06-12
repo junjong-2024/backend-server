@@ -25,6 +25,9 @@ public class Room {
     @Column(name = "name")
     private String name;
 
+    @Column(name="description")
+    private String description;
+
     @Column(name = "created_at")
     private LocalDateTime created_at;
 
@@ -51,9 +54,10 @@ public class Room {
     }
 
     @Builder
-    public Room(String id, String name, LocalDateTime created_at, User user, String video_src, String thumbnail_src, String script, Rule rule) {
+    public Room(String id, String name, String description, LocalDateTime created_at, User user, String video_src, String thumbnail_src, String script, Rule rule) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.created_at = created_at;
         this.user = user;
         this.video_src = video_src;

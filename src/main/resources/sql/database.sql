@@ -39,4 +39,7 @@ create table discussion_room(
                                 foreign key (rule_id) references rule(id)
 );
 
+alter table discussion_room add column description VARCHAR(300) after name;
+/* description 컬럼 추가*/
+
 select * from discussion_room;

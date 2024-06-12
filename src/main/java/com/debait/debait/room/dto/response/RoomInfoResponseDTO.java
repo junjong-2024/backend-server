@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class RoomInfoResponseDTO {
     private String id;
     private String name;
+    private String description;
     private LocalDateTime created_at;
     private String user_id;
     private String video_src;
@@ -25,6 +26,7 @@ public class RoomInfoResponseDTO {
     public RoomInfoResponseDTO(Room room) {
         this.id = room.getId();
         this.name = room.getName();
+        this.description = room.getDescription();
         this.created_at = room.getCreated_at();
         this.user_id = room.getRule().getUser().getId();
         this.video_src = room.getVideo_src();
@@ -37,6 +39,7 @@ public class RoomInfoResponseDTO {
         RoomInfoResponseDTO dto = new RoomInfoResponseDTO();
         dto.setId(room.getId());
         dto.setName(room.getName());
+        dto.setDescription(room.getDescription());
         dto.setCreated_at(room.getCreated_at());
         dto.setUser_id(room.getUser().getId());
         dto.setVideo_src(room.getVideo_src());

@@ -13,8 +13,11 @@ import com.debait.debait.rule.repository.RuleRepository;
 import com.debait.debait.user.entity.User;
 import com.debait.debait.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +45,9 @@ public class RoomService {
                 .orElseThrow(() -> new RuntimeException("지정된 규칙을 찾을 수 없습니다."));
 
         Room save = roomRepository.save(dto.toEntity(user, rule));
-        return new RoomInfoResponseDTO(save);
+        RoomInfoResponseDTO responseDTO = new RoomInfoResponseDTO(save);
+
+        return responseDTO;
     }
 
     public List<RoomInfoResponseDTO> getRoomInfoList(String userId) {

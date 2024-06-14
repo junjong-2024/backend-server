@@ -17,9 +17,10 @@ public class SocketClient {
         this.restTemplate = restTemplate;
     }
 
-    public void sendRoomInfo(RoomSocket.RoomInfo roomInfo) {
+    public void sendRoomInfo(RoomSocket.RoomInfo roomInfo, String roomId) {
         try {
-            restTemplate.postForObject(socketServerUrl, roomInfo, String.class);
+            String a = restTemplate.postForObject(socketServerUrl+"/room/"+roomId, roomInfo, String.class);
+            System.out.println(a);
             System.out.println("RoomInfo sent successfully to socket server.");
         } catch (Exception e) {
             e.printStackTrace();

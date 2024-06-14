@@ -93,7 +93,7 @@ public class RoomController {
             roomInfo = mapper.readValue(jsonString, RoomSocket.RoomInfo.class);
 
             // 소켓 클라이언트를 사용하여 roomInfo 전송
-            socketClient.sendRoomInfo(roomInfo);
+            socketClient.sendRoomInfo(roomInfo, create.getId());
 
 //            System.out.println("Room Name: " + roomInfo.getName());
 //            System.out.println("Description: " + roomInfo.getDescription());

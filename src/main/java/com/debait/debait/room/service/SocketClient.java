@@ -1,5 +1,6 @@
 package com.debait.debait.room.service;
 
+import com.debait.debait.room.dto.response.SocketResponseDTO;
 import com.debait.debait.room.entity.RoomSocket;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,11 @@ public class SocketClient {
         this.restTemplate = restTemplate;
     }
 
-    public void sendRoomInfo(RoomSocket.RoomInfo roomInfo, String roomId) {
-        try {
-            String a = restTemplate.postForObject(socketServerUrl+"/room/"+roomId, roomInfo, String.class);
-            System.out.println(a);
-            System.out.println("RoomInfo sent successfully to socket server.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public SocketResponseDTO sendRoomInfo(RoomSocket.RoomInfo roomInfo, String roomId) {
+        SocketResponseDTO a = restTemplate.postForObject(socketServerUrl+"/room/"+roomId, roomInfo, SocketResponseDTO.class);
+        System.out.println(a.getId());
+        System.out.println("RoomInfo sent successfully to socket server.");
+        return a;
     }
 
 

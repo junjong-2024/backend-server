@@ -93,7 +93,7 @@ public class RoomController {
             roomInfo = mapper.readValue(jsonString, RoomSocket.RoomInfo.class);
 
             // 소켓 클라이언트를 사용하여 roomInfo 전송
-            socketClient.sendRoomInfo(roomInfo, create.getId());
+            return ResponseEntity.ok().body(socketClient.sendRoomInfo(roomInfo, create.getId()));
 
 //            System.out.println("Room Name: " + roomInfo.getName());
 //            System.out.println("Description: " + roomInfo.getDescription());
@@ -106,10 +106,10 @@ public class RoomController {
         } catch (JsonProcessingException e) {
             // JSON 파싱 중 오류 발생 시 처리
             e.printStackTrace();
+            return ResponseEntity.badRequest().body("Unexpected request body.");
         }
 
         // Room의 ID를 ResponseEntity로 반환
-        return ResponseEntity.ok().body(new SocketResponseDTO(createdRoomId));
     }
 
     // 특정 사용자가 생성한 토론 목록을 가져오기

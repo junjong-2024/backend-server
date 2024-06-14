@@ -44,7 +44,7 @@ public class RuleController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
         }
 
-        if (dto.getRule_name() == null || dto.getSpec() == null) {
+        if (dto.getRule_name() == null ) {
             // 클라이언트가 필수 입력 필드를 제공하지 않은 경우
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("rule_name and spec must be provided");
         }
@@ -54,7 +54,8 @@ public class RuleController {
 
         RuleInfoResponseDTO createRule = ruleService.create(dto, userInfo);
         return ResponseEntity.ok().body(createRule);
-        //return ResponseEntity.ok().body("규칙 생성하기");
+        //return ResponseEntity.ok().build();
+
     }
 
     // 규칙 목록 가져오기

@@ -86,7 +86,6 @@ public class RoomService {
 
         return new RoomUpdateResponseDTO(savedRoom);
     }
-
 }
 
 

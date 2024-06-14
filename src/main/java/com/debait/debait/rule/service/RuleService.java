@@ -32,8 +32,12 @@ public class RuleService {
                 new RuntimeException("일치하는 회원을 찾을 수 없습니다.")
         );
 
-        Rule save = ruleRepository.save(dto.toEntity(user));
-        return new RuleInfoResponseDTO(save);
+        Rule rule = dto.toEntity(user);
+        Rule savedRule = ruleRepository.save(rule);
+        //Rule save = ruleRepository.save(dto.toEntity(user));
+        //return new RuleInfoResponseDTO(save);
+
+        return new RuleInfoResponseDTO(savedRule);
     }
 
     // 모든 규칙 가져오기
@@ -62,8 +66,6 @@ public class RuleService {
             throw new RuntimeException("Rule not found");
         }
     }
-    
-
 }
 
 

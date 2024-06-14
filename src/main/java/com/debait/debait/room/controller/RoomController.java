@@ -9,6 +9,7 @@ import com.debait.debait.room.dto.response.RoomUpdateResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.entity.RoomSocket;
 import com.debait.debait.room.service.RoomService;
+import com.debait.debait.room.service.SocketClient;
 import com.debait.debait.rule.entity.Rule;
 import com.debait.debait.rule.repository.RuleRepository;
 import com.debait.debait.rule.service.RuleService;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,9 @@ public class RoomController {
 
     @Autowired
     private RuleRepository ruleRepository;  // RuleRepository 주입
+
+    @Autowired
+    private SocketClient socketClient;
 
     public RoomController(RoomService roomService) {
         this.roomService = roomService;
@@ -85,14 +90,17 @@ public class RoomController {
             // JSON 문자열을 RoomInfo 객체로 변환
             roomInfo = mapper.readValue(jsonString, RoomSocket.RoomInfo.class);
 
-            System.out.println("Room Name: " + roomInfo.getName());
-            System.out.println("Description: " + roomInfo.getDescription());
-            System.out.println("Team Size: " + roomInfo.getTeamSize());
-            System.out.println("Order Size: " + roomInfo.getOrderSize());
-            System.out.println("Rules:");
-            for (RoomSocket.Rules rule1 : roomInfo.getRules()) {
-                System.out.println("- Debater: " + rule1.getDebater() + ", Msg: " + rule1.getMsg() + ", Time: " + rule1.getTime());
-            }
+            // 소켓 클라이언트를 사용하여 roomInfo 전송
+            socketClient.sendRoomInfo(roomInfo);
+
+//            System.out.println("Room Name: " + roomInfo.getName());
+//            System.out.println("Description: " + roomInfo.getDescription());
+//            System.out.println("Team Size: " + roomInfo.getTeamSize());
+//            System.out.println("Order Size: " + roomInfo.getOrderSize());
+//            System.out.println("Rules:");
+//            for (RoomSocket.Rules rule1 : roomInfo.getRules()) {
+//                System.out.println("- Debater: " + rule1.getDebater() + ", Msg: " + rule1.getMsg() + ", Time: " + rule1.getTime());
+//            }
         } catch (JsonProcessingException e) {
             // JSON 파싱 중 오류 발생 시 처리
             e.printStackTrace();

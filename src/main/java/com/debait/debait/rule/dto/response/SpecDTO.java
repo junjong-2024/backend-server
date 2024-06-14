@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class SpecDTO {
 
-    private int team_size;
-    private int order_size;
+    private int teamSize;
+    private int orderSize;
     private List<RuleDetailDTO> rules;
 }

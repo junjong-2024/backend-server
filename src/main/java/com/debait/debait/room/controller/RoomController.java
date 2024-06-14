@@ -93,9 +93,6 @@ public class RoomController {
             for (RoomSocket.Rules rule1 : roomInfo.getRules()) {
                 System.out.println("- Debater: " + rule1.getDebater() + ", Msg: " + rule1.getMsg() + ", Time: " + rule1.getTime());
             }
-
-            // roomInfo 객체를 이용하여 필요한 작업을 수행
-
         } catch (JsonProcessingException e) {
             // JSON 파싱 중 오류 발생 시 처리
             e.printStackTrace();

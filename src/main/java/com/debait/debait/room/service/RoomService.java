@@ -7,17 +7,12 @@ import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
 import com.debait.debait.room.dto.response.RoomUpdateResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.repository.RoomRepository;
-import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
 import com.debait.debait.rule.entity.Rule;
 import com.debait.debait.rule.repository.RuleRepository;
 import com.debait.debait.user.entity.User;
 import com.debait.debait.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +28,8 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final RuleRepository ruleRepository;
-    private final ModelMapper modelMapper;
 
+    @Transactional
     public RoomInfoResponseDTO create(RoomInfoRequestDTO dto, TokenUserInfo userInfo) {
 
         User user = userRepository.findById(userInfo.getUserId()).orElseThrow(() ->
@@ -86,7 +81,5 @@ public class RoomService {
 
         return new RoomUpdateResponseDTO(savedRoom);
     }
+
 }
-
-
-

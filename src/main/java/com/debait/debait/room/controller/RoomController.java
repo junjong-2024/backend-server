@@ -6,6 +6,7 @@ import com.debait.debait.room.dto.request.RoomInfoRequestDTO;
 import com.debait.debait.room.dto.request.RoomUpdateRequestDTO;
 import com.debait.debait.room.dto.response.RoomInfoResponseDTO;
 import com.debait.debait.room.dto.response.RoomUpdateResponseDTO;
+import com.debait.debait.room.dto.response.SocketResponseDTO;
 import com.debait.debait.room.entity.Room;
 import com.debait.debait.room.entity.RoomSocket;
 import com.debait.debait.room.service.RoomService;
@@ -79,6 +80,7 @@ public class RoomController {
         dto.setUser_id(userInfo.getUserId());
 
         RoomInfoResponseDTO create = roomService.create(dto, userInfo);
+        String createdRoomId = create.getId();
 
         // spec 값을 JSON 문자열에 포함
         String jsonString = "{ \"name\" : \"" + dto.getName() + "\", \"description\" : \"" + dto.getDescription() + "\", "+ ruleSpec + " }";
@@ -106,10 +108,8 @@ public class RoomController {
             e.printStackTrace();
         }
 
-        //System.out.println("-------------");
-        //System.out.println(roomInfo);
-
-        return ResponseEntity.ok().body(create);
+        // Room의 ID를 ResponseEntity로 반환
+        return ResponseEntity.ok().body(new SocketResponseDTO(createdRoomId));
     }
 
     // 특정 사용자가 생성한 토론 목록을 가져오기

@@ -46,7 +46,9 @@ public class RoomService {
     }
 
     public List<RoomInfoResponseDTO> getRoomInfoList(String userId) {
-        List<Room> rooms = roomRepository.findByUser_Id(userId);
+//        List<Room> rooms = roomRepository.findByUser_Id(userId);
+//        return rooms.stream().map(RoomInfoResponseDTO::new).collect(Collectors.toList());
+        List<Room> rooms = roomRepository.findByUser_IdOrderByCreated_atDesc(userId);
         return rooms.stream().map(RoomInfoResponseDTO::new).collect(Collectors.toList());
     }
 

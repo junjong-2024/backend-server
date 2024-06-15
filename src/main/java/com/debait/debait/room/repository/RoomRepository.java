@@ -13,6 +13,9 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<Room, String> {
     List<Room> findByUser_Id(String userId);
 
+    @Query("SELECT r FROM Room r WHERE r.user.id = :userId ORDER BY r.created_at DESC")
+    List<Room> findByUser_IdOrderByCreated_atDesc(String userId);
+
 //    @Query("SELECT r FROM Room r WHERE r.id = :roomId")
 //    Optional<Room> findByRoom_id(String roomId);
 }

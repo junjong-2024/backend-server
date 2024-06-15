@@ -1,6 +1,7 @@
 package com.debait.debait.rule.service;
 
 import com.debait.debait.auth.TokenUserInfo;
+import com.debait.debait.room.repository.RoomRepository;
 import com.debait.debait.rule.dto.request.RuleInfoRequestDTO;
 import com.debait.debait.rule.dto.response.RuleInfoResponseDTO;
 import com.debait.debait.rule.entity.Rule;
@@ -10,6 +11,7 @@ import com.debait.debait.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class RuleService {
     private final RuleRepository ruleRepository;
 
     private final ModelMapper modelMapper;
+    private final RoomRepository roomRepository;
 
     public RuleInfoResponseDTO create(RuleInfoRequestDTO dto, TokenUserInfo userInfo) {
 
@@ -56,14 +59,27 @@ public class RuleService {
         return RuleInfoResponseDTO.fromRule(rule);
     }
 
+    public boolean isRuleInUse(String rule_id) {
+        return roomRepository.existsById(rule_id);
+    }
+
     // 규칙 삭제하기
-    public void deleteRule(String rule_id) {
-        Optional<Rule> optionalRule = ruleRepository.findById(rule_id);
-        if (optionalRule.isPresent()) {
-            ruleRepository.delete(optionalRule.get());
-            log.info("Rule with ID {} deleted successfully", rule_id);
-        } else {
-            throw new RuntimeException("Rule not found");
+    public String deleteRule(String rule_id) {
+        try {
+            if (isRuleInUse(rule_id)) {
+                return "The rule with ID " + rule_id + " is currently in use and cannot be deleted.";
+            }
+            Optional<Rule> optionalRule = ruleRepository.findById(rule_id);
+            if (optionalRule.isPresent()) {
+                ruleRepository.delete(optionalRule.get());
+                log.info("Rule with ID {} deleted successfully", rule_id);
+                return "Rule with ID " + rule_id + " deleted successfully";
+            } else {
+                return "Rule not found";
+            }
+        } catch (Exception e) {
+            log.error("Error deleting rule with ID {}: {}", rule_id, e.getMessage());
+            return "Failed to delete rule with ID " + rule_id + ". It might be in use.";
         }
     }
 }

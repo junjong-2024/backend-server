@@ -77,7 +77,9 @@ public class RuleController {
     }
 
     @DeleteMapping ("/del/{rule_id}")
-    public void deleteRule(@PathVariable("rule_id") String rule_id) {
-        ruleService.deleteRule(rule_id);
+    public ResponseEntity<String> deleteRule(@PathVariable("rule_id") String rule_id) {
+
+        String message = ruleService.deleteRule(rule_id);
+        return ResponseEntity.ok(message);
     }
 }
